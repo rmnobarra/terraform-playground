@@ -24,12 +24,11 @@ az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOU
 az storage account list -g tfstate-aks | jq '.[].name' -r
 ```
 
-or
+3. Setup terraform remote state in terraform file providers.tf on line number 24. Using storage account name from output above or just execute:
+
 ```bash
 ./script.sh
 ```
-
-3. Setup terraform remote state in terraform file providers.tf on line number 24. Using storage account name from output above.
 
 4. Run terraform
 
@@ -41,17 +40,8 @@ terraform init && terraform apply --auto-approve
 
 ```bash
 resource_group_name=$(terraform output -raw resource_group_name)
-
-az aks list \
-  --resource-group $resource_group_name \
-  --query "[].{\"K8s cluster name\":name}" \
-  --output table
-
-echo "$(terraform output kube_config)" > ./azurek8s
-
-cat ./azurek8s
-
-export KUBECONFIG=./azurek8s
-
+kubernetes_cluster_name=$(terraform output -raw kubernetes_cluster_name)
+az aks get-credentials --resource-group $resource_group_name --name $kubernetes_cluster_name
 kubectl get nodes
 ```
+

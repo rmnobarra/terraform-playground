@@ -1,9 +1,6 @@
 name: Terraform Apply on Azure with Checkov
 
-on:
-  push:
-    branches:
-      - main # ou a branch que você desejar
+on: workflow_dispatch
 
 jobs:
   checkov-scan:
