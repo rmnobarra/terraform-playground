@@ -1,4 +1,4 @@
-name: Terraform Apply on Azure with Checkov
+name: Terraform Destroy on Azure
 
 on: workflow_dispatch
 
