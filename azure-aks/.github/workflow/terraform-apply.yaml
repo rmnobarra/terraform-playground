@@ -22,6 +22,7 @@ jobs:
       run: pip install checkov
       
     - name: Run Checkov
+      #run: checkov -d . --soft-fail
       run: checkov -d .
       
   terraform:
