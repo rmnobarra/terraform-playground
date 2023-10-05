@@ -40,6 +40,23 @@ resource"<PROVIDER>_<TYPE>" "<NAME>"{
 
 where PROVIDER is the name of a provider (e.g., aws), TYPE is the type of resource to create in that provider (e.g., instance), NAME is an identifier you can use throughout the Terraform code to refer to this resource (e.g., my_instance), and CONFIG consists of one or more arguments that are specific to that resource.
 
+## What Is Terraform State?
+
+Every time you run Terraform, it records information about what infrastructure it created in a Terraform state file.
+
+## Backends
+
+A Terraform backend determines how Terraform loads and stores state. The default backend, which you’ve been using this entire time, is the local backend, which stores the state file on your local disk. Remote backends allow you to store the state file in a remote, shared store. A number of remote backends are supported, including Amazon S3, Azure Storage, Google Cloud Storage, and HashiCorp’s Terraform Cloud and Terraform Enterprise.
+
+## workspaces
+
+Terraform workspaces allow you to store your Terraform state in multiple, separate, named workspaces. Terraform starts with a single workspace called “default,” and if you never explicitly specify a workspace, the default workspace is the one you’ll use the entire time.
+
+## The terraform_remote_state Data Source
+
+You can use this data source to fetch the Terraform state file stored by another set of Terraform configurations.
+
+
 ## References:
 
 1. [terraform-up-and-running-code](https://github.com/brikis98/terraform-up-and-running-code)
