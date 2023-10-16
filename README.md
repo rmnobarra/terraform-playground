@@ -56,6 +56,26 @@ Terraform workspaces allow you to store your Terraform state in multiple, separa
 
 You can use this data source to fetch the Terraform state file stored by another set of Terraform configurations.
 
+Example:
+
+data.terraform_remote_state.<NAME>.outputs.<ATTRIBUTE>
+
+## Modules
+
+Modules are the key ingredient to writing reusable, maintainable, and testable Terraform code.
+
+## Loops
+
+Terraform offers several different looping constructs, each intended to be used in a slightly different scenario:
+
+* count parameter, to loop over resources and modules
+* for_each expressions, to loop over resources, inline blocks within a resource, and modules
+* for expressions, to loop over lists and maps
+* for string directive, to loop over lists and maps within a string
+
+### count
+
+count is Terraform’s oldest, simplest, and most limited iteration construct: all it does is define how many copies of the resource to create.
 
 ## References:
 
