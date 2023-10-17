@@ -73,9 +73,13 @@ Terraform offers several different looping constructs, each intended to be used 
 * for expressions, to loop over lists and maps
 * for string directive, to loop over lists and maps within a string
 
-### count
+## count
 
 count is Terraform’s oldest, simplest, and most limited iteration construct: all it does is define how many copies of the resource to create.
+
+## for_each
+
+The for_each expression allows you to loop over lists, sets, and maps to create (a) multiple copies of an entire resource, (b) multiple copies of an inline block within a resource, or (c) multiple copies of a module.
 
 ## References:
 
