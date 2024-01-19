@@ -81,6 +81,49 @@ count is Terraform’s oldest, simplest, and most limited iteration construct: a
 
 The for_each expression allows you to loop over lists, sets, and maps to create (a) multiple copies of an entire resource, (b) multiple copies of an inline block within a resource, or (c) multiple copies of a module.
 
+## String directives
+
+String directives allow you to use control statements (e.g., for-loops and if-statements) within strings using a syntax similar to string interpolations, but instead of a dollar sign and curly braces (${…}), you use a percent sign and curly braces (%{…}).
+Terraform supports two types of string directives: for-loops and conditionals.
+
+## Conditionals
+
+Just as Terraform offers several different ways to do loops, there are also several different ways to do conditionals, each intended to be used in a slightly different scenario:
+
+* count parameter
+    * Used for conditional resources
+
+* for_each and for expressions
+    * Used for conditional resources and inline blocks within a resource
+
+* if string directive
+    * Used for conditionals within a string
+
+## Providers
+
+What Is a Provider?
+
+Under the hood, Terraform consists of two parts:
+
+Core
+
+This is the terraform binary, and it provides all the basic functionality in Terraform that is used by all platforms, such as a command-line interface (i.e., plan, apply, etc.)
+
+Providers
+Terraform providers are plugins for the Terraform core. Each plugin is written in Go to implement a specific interface, and the Terraform core knows how to install and execute the plugin.
+
+The Terraform core communicates with plugins via remote procedure calls (RPCs), and those plugins, in turn, communicate with their corresponding platforms via the network (e.g., via HTTP calls):
+
+![Terraform workflow](./resources/img/terraform-core-provider-clouds.png)
+
+## validation, precondition, and postcondition
+
+validation, precondition, and postcondition blocks are all useful tools, but they can only do basic checks. This is because you can only use data sources, resources, and language constructs built into Terraform to do these checks, and those are often not enough for more advanced behavior.
+
+## null_resource
+
+The null_resource even has a handy argument called triggers, which takes in a map of keys and values. Whenever the values change, the null_resource will be re-created, therefore forcing any provisioners within it to be reexecuted.
+
 ## References:
 
 1. [terraform-up-and-running-code](https://github.com/brikis98/terraform-up-and-running-code)
