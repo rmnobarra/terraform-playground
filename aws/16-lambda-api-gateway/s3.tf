@@ -16,19 +16,19 @@ resource "aws_s3_bucket_acl" "lambda_bucket" {
   acl    = "private"
 }
 
-data "archive_file" "lambda_hello_world" {
+data "archive_file" "lambda_app" {
   type = "zip"
 
   source_dir  = "${path.module}/app"
   output_path = "${path.module}/app.zip"
 }
 
-resource "aws_s3_object" "lambda_hello_world" {
+resource "aws_s3_object" "lambda_app" {
   bucket = aws_s3_bucket.lambda_bucket.id
 
   key    = "app.zip"
-  source = data.archive_file.lambda_hello_world.output_path
+  source = data.archive_file.lambda_app.output_path
 
-  etag       = filemd5(data.archive_file.lambda_hello_world.output_path)
+  etag       = filemd5(data.archive_file.lambda_app.output_path)
   depends_on = [aws_s3_bucket.lambda_bucket]
 }

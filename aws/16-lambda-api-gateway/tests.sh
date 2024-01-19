@@ -1,50 +1,50 @@
 #!/bin/bash
 
-# Definindo cores para a saída do terminal
+# Setups terminal colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-# Extrai a região da AWS do arquivo variables.tf
+# Extracts the AWS region from the variables.tf file
 region=$(sed -n -e '/variable "aws_region"/,/}/ p' variables.tf | awk -F\" '/default/ {print $2}')
 
-# Verifica se a região foi extraída corretamente
+# Verify if the region was extracted correctly
 if [ -z "$region" ]; then
-    echo -e "${RED}Erro: Não foi possível extrair a região da AWS do arquivo variables.tf${NC}"
+    echo -e "${RED}Error: Was not possible extract aws region from variables.tf${NC}"
     exit 1
 fi
 
-# Obtém o nome da função Lambda
+# Gets the Lambda function name
 function_name=$(terraform output -raw function_name)
 
-# Verifica se o nome da função foi obtido corretamente
+# Verify if the function name was obtained correctly
 if [ -z "$function_name" ]; then
-    echo -e "${RED}Erro: Não foi possível obter o nome da função Lambda${NC}"
+    echo -e "${RED}Error: Was not possible get lambda function name${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}Invocando a função Lambda:${NC}"
+echo -e "${GREEN}Invoking lambda function:${NC}"
 echo ""
 
-# Invoca a função Lambda
+# Invokes the Lambda function
 aws lambda invoke --region=$region --function-name=$function_name response.json > /dev/null 2>&1
 
-# Verifica se a função Lambda foi invocada corretamente
+# Verifies if the Lambda function was invoked correctly
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Erro: Não foi possível invocar a função Lambda${NC}"
+    echo -e "${RED}Error: Was not possible invoke Lambda${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}Resposta:${NC}"
+echo -e "${GREEN}Response:${NC}"
 echo ""
 
-# Imprime a resposta da função Lambda
+# Prints the Lambda function response
 jq . response.json
 
 echo ""
 
-echo -e "${GREEN}Invocando a função Lambda via API Gateway:${NC}"
+echo -e "${GREEN}Invoking a lambda function via API Gateway:${NC}"
 echo ""
 
-# Invoca a função Lambda via API Gateway
+# Invokes the Lambda function via API Gateway
 curl "$(terraform output -raw base_url)/hello?Name=MyName"
